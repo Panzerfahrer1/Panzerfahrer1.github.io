@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerne</title>
+
+  <!-- Optional: nicer font (still no content change) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#0b1020;
+      --bg2:#111a33;
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.06);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+
+      /* Fancy background without changing your content */
+      background:
+        radial-gradient(1200px 800px at 15% 20%, rgba(95, 145, 255, .35), transparent 60%),
+        radial-gradient(900px 700px at 85% 75%, rgba(190, 120, 255, .30), transparent 55%),
+        radial-gradient(700px 500px at 55% 10%, rgba(90, 255, 200, .18), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+
+    /* Subtle animated noise/grain */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-20%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      opacity:.10;
+      transform: rotate(8deg);
+      pointer-events:none;
+      animation: drift 14s linear infinite;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0) rotate(8deg); }
+      100%{ transform: translate3d(-80px,60px,0) rotate(8deg); }
+    }
+
+    /* Pretty card */
+    .card{
+      width:min(560px, 92vw);
+      padding: clamp(22px, 3.5vw, 34px);
+      border-radius: 22px;
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position:relative;
+      transform: translateY(6px);
+      animation: pop .7s ease-out both;
+    }
+    @keyframes pop{
+      from{ opacity:0; transform: translateY(18px) scale(.98); }
+      to{ opacity:1; transform: translateY(6px) scale(1); }
+    }
+
+    /* Decorative glow border */
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius: 22px;
+      padding:1px;
+      background: linear-gradient(135deg,
+        rgba(120,180,255,.55),
+        rgba(190,120,255,.50),
+        rgba(90,255,200,.35)
+      );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.65;
+    }
+
+    /* Content styling (same text, just prettier) */
+    .content{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 14px;
+      line-height:1;
+      font-weight:800;
+      font-size: clamp(28px, 5vw, 44px);
+      letter-spacing: -0.02em;
+      text-shadow: 0 10px 30px rgba(0,0,0,.35);
+      padding: 10px 6px;
+    }
+
+    /* Make the emoji feel intentional */
+    .emoji{
+      display:inline-grid;
+      place-items:center;
+      width: 1.25em;
+      height: 1.25em;
+      border-radius: 14px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      transform: translateY(2px);
+    }
+
+    /* Tiny footer hint (not new content, just decoration via CSS) */
+    .hint{
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align:center;
+      user-select:none;
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; }
+      body::before{ animation:none !important; }
+      .card{ transform:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card" role="main" aria-label="Gerne page">
+    <div class="content">
+      <span>Gerne</span>
+      <span class="emoji" aria-hidden="true">👍</span>
+    </div>
+    <div class="hint">simple, clean, and not ugly anymore</div>
+  </main>
+</body>
+</html>
